@@ -1,4 +1,4 @@
-package ru.skillbranch.devintensive.extention
+package ru.skillbranch.devintensive.extension
 
 fun String.stripHtml() = this.replace(Regex("(<.*?>)|(&[^ а-я]{1,4}?;)"), "").replace(Regex(" {2,}"), " ")
 
