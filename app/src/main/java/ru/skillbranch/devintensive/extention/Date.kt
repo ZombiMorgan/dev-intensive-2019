@@ -40,42 +40,40 @@ enum class TimeUnits {
 
     fun plural(value: Int): String {
         val plurals = mapOf(
-            SECOND to Triple("секунды", "секунду", "секунд"),
-            MINUTE to Triple("минуты", "минуту", "минут"),
-            HOUR to Triple("часа", "час", "часов"),
-            DAY to Triple("дня", "день", "дней")
+            SECOND to Triple("секунду","секунды","секунд"),
+            MINUTE to Triple("минуту","минуты","минут"),
+            HOUR to Triple("час","часа","часов"),
+            DAY to Triple("день","дня","дней")
         )
 
         val rem = value % 10
-        var rem100 = value % 100
+        val rem100 = value % 100
 
         return when {
             rem100 in 10..20 -> "$value ${plurals[this]?.third}"
-            rem in 2..4 -> "$value ${plurals[this]?.first}"
-            rem == 1 -> "$value ${plurals[this]?.second}"
+            rem in 2..4 -> "$value ${plurals[this]?.second}"
+            rem == 1 -> "$value ${plurals[this]?.first}"
             else -> "$value ${plurals[this]?.third}"
         }
     }
 }
 
 fun Date.humanizeDiff(date: Date = Date()): String {
-    val diff = date.time - this.time
-    var absDiff = abs(diff)
-    val isPast = diff > 0
-    if (!isPast) absDiff+=1000
+    val diff = abs(this.time -  date.time)
+    val isPast = this.time < date.time
 
     return when {
-        absDiff / SECOND <= 1 -> "только что"
-        absDiff / SECOND <= 45 -> if (isPast) "несколько секунд назад" else "через несколько секунд"
-        absDiff / SECOND <= 75 -> if (isPast) "минуту назад" else "через минуту"
-        absDiff / MINUTE <= 45 -> if (isPast) "${TimeUnits.MINUTE.plural((absDiff / MINUTE).toInt())} назад"
-        else "через ${TimeUnits.MINUTE.plural((absDiff / MINUTE).toInt())}"
-        absDiff / MINUTE <= 75 -> if (isPast) "час назад" else "через час"
-        absDiff / HOUR <= 22 -> if (isPast) "${TimeUnits.HOUR.plural((absDiff / HOUR).toInt())} назад"
-        else "через ${TimeUnits.HOUR.plural((absDiff / HOUR).toInt())}"
-        absDiff / HOUR <= 26 -> if (isPast) "день назад" else "через день"
-        absDiff / DAY <= 360 -> if (isPast) "${TimeUnits.DAY.plural((absDiff / DAY).toInt())} назад"
-        else "через ${TimeUnits.DAY.plural((absDiff / DAY).toInt())}"
+        diff <= SECOND -> "только что"
+        diff <= SECOND * 45 -> if (isPast) "несколько секунд назад" else "через несколько секунд"
+        diff <= SECOND * 75 -> if (isPast) "минуту назад" else "через минуту"
+        diff <= MINUTE * 45 -> if (isPast) "${TimeUnits.MINUTE.plural((diff / MINUTE).toInt())} назад"
+        else "через ${TimeUnits.MINUTE.plural((diff / MINUTE).toInt())}"
+        diff  <= MINUTE * 75 -> if (isPast) "час назад" else "через час"
+        diff  <= HOUR * 22 -> if (isPast) "${TimeUnits.HOUR.plural((diff / HOUR).toInt())} назад"
+        else "через ${TimeUnits.HOUR.plural((diff / HOUR).toInt())}"
+        diff  <= HOUR * 26 -> if (isPast) "день назад" else "через день"
+        diff  <= DAY * 360 -> if (isPast) "${TimeUnits.DAY.plural((diff / DAY).toInt())} назад"
+        else "через ${TimeUnits.DAY.plural((diff / DAY).toInt())}"
         else -> if (isPast) "более года назад" else "более чем через год"
     }
 }

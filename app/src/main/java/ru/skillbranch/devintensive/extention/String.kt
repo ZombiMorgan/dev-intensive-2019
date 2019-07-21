@@ -1,16 +1,8 @@
 package ru.skillbranch.devintensive.extention
 
-fun String.stripHtml() = this.replace(Regex("<[^<]*?>|&\\d+;"), "").replace(Regex("\\s+"), " ")
+fun String.stripHtml() = this.replace(Regex("(<.*?>)|(&[^ а-я]{1,4}?;)"), "").replace(Regex(" {2,}"), " ")
 
 fun String.truncate(length: Int = 16): String {
-    this.trimEnd()
-    if (this.substring(length - 1, length) == " ") {
-        var truncatedStr = this.trimEnd()
-        if (truncatedStr.length < length) {
-            return truncatedStr
-        }
-        return this.substring(0, length - 1) + "..."
-    } else {
-        return this.substring(0, length) + "..."
-    }
+    val truncStr = this.trim()
+    return if (truncStr.length <= length) truncStr else truncStr.substring(0, length).trim() + "..."
 }
