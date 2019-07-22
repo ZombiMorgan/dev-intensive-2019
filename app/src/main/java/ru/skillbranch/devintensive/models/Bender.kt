@@ -25,7 +25,7 @@ class Bender(var status: Status = Status.NORMAL, var question: Question = Questi
         } else {
             if (status == Status.CRITICAL) {
                 resetStates()
-                "Это неправильный ответ. Начнём сначала"
+                "Это неправильный ответ. Давай все по новой"
             } else {
                 status = status.nextStatus()
                 "Это неправильный ответ"
