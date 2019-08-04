@@ -1,5 +1,8 @@
 package ru.skillbranch.devintensive.utils
 
+import android.content.Context
+import android.util.TypedValue
+
 object Utils {
     fun parseFullName(fullName:String?) : Pair<String?,String?>{
         var string = fullName?.trim()
@@ -80,5 +83,11 @@ object Utils {
 
         return map
     }
+
+    fun convertDpToPx(context: Context, dp: Int): Int = (dp * context.resources.displayMetrics.density + 0.5f).toInt()
+
+    fun convertPxToDp(context: Context, px: Int): Int = (px / context.resources.displayMetrics.density + 0.5f).toInt()
+
+    fun convertSpToPx(context: Context, sp: Int): Int = (sp * context.resources.displayMetrics.scaledDensity + 0.5f).toInt()
 
 }
