@@ -42,18 +42,7 @@ object ChatRepository {
                     last.messages,
                     true
             ))
-            /*copy.add(ChatItem(
-                "0",
-                null,
-                "",
-                 "title",
-                last_masg,
-                count_unrd_msg,
-                last_msg_date?.shortFormat(),
-                false,
-                ChatType.ARCHIVE,
-                last_autor
-            ))*/
+
             return copy
         }
         return null
